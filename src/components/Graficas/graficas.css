@@ -1,0 +1,23 @@
+.grafica-container{
+    border: 1px solid red;
+    display: flex;
+}
+
+.texts{
+    border: 1px solid green;
+    width: 40%;
+}
+
+.indice{
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    font-size: 45px;
+    border: 5px solid;
+}
+
+.grafica{
+    width: 60%;
+    border: 2px solid purple;
+}
