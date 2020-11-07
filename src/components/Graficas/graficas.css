@@ -1,6 +1,14 @@
 .grafica-container{
-    border: 1px solid red;
+    border: 1px solid greenyellow;
     display: flex;
+    justify-content: space-between;
+    padding: 0;
+    margin: 0;
+}
+.container{
+    padding: 0;
+    margin: 0;
+    border: 3px solid ;
 }
 
 .texts{
@@ -14,10 +22,38 @@
     height: 100px;
     text-align: center;
     font-size: 45px;
-    border: 5px solid;
+    border: 6px solid;
+    display: block;
+    margin: auto;
 }
 
 .grafica{
-    width: 60%;
     border: 2px solid purple;
 }
+
+.lds-dual-ring {
+    margin: auto;
+    display: block;
+    width: 100px;
+    height: 100px;
+  }
+  .lds-dual-ring:after {
+    content: " ";
+    display: block;
+    width: 100px;
+    height: 100px;
+    margin: 8px;
+    border-radius: 50%;
+    border: 6px solid #cef;
+    border-color: #cef transparent #cef transparent;
+    animation: lds-dual-ring 1.2s linear infinite;
+  }
+  @keyframes lds-dual-ring {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+

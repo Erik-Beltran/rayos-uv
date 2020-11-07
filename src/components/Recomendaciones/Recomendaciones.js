@@ -1,28 +1,33 @@
 import React from 'react'
+import gafas from './img/sun-glasses.png'
+import mangaLarga from './img/manga-larga.png'
+import sunScreen from './img/protectorsolar.png'
+import sombrero from './img/gorra.svg'
+import sombrilla from './img/sombrilla.png'
+import './recomendaciones.css'
 
 export const Recomendaciones = () => {
 
-    const uvBajo = [];
+
     const uvModerado = [
-        { descripcion: "Utilizar anteojos de sol", img:"./img/sun-glasses.png"},
-        {descripcion: "Utilizar ropa de manga larga", img:""},
-        {descripcion: "Aplicarse protector solar de amplio espectro", img:""},
-        {descripcion: "Utilizar sombrero de ala ancha", img:""},
-        {descripcion: "Mantenerse en la sombra", img:""},
+        {descripcion: "Utilizar anteojos de sol", img: gafas},
+        {descripcion: "Utilizar ropa de manga larga", img:mangaLarga},
+        {descripcion: "Aplicarse protector solar de amplio espectro", img:sunScreen},
+        {descripcion: "Utilizar sombrero de ala ancha", img:sombrero},
+        {descripcion: "Mantenerse en la sombra", img:sombrilla},
     ];
-    const uvAlto = [];
-    const uvMuyAlto = [];
-    const uvExtremo = [];
+
 
     console.log(uvModerado)
     return (
-        <div>
+        <div className="container recomendaciones">
             <h2>RECOMENDACIONES</h2>
-
             <ul>
                 {uvModerado.map(item => (
                     <li>
+                        <img src={item.img} alt={item.descripcion}></img>
                         <p>{item.descripcion}</p>
+                       
                     </li>
                 ))}
             </ul>

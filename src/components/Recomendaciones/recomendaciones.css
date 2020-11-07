@@ -1,0 +1,13 @@
+.recomendaciones{
+    border: 2px solid brown;
+}
+
+.recomendaciones ul{
+    list-style: none;
+    display: flex;
+}
+
+.recomendaciones img{
+    width: 70px;
+    height: 70px;
+}
