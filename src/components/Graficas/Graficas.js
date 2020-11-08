@@ -29,12 +29,12 @@ class Graficas extends Component {
         indice: "",
         showCompleted: false,
         showGrafica: false,
-        width:""
+        width: ""
     }
 
     handleSubmit = (e) => {
-        const width = document.body.clientWidth < 767 ?  document.body.clientWidth -20: 600 
-console.log(width)
+        const width = document.body.clientWidth < 767 ? document.body.clientWidth - 20 : 600
+        console.log(width)
         console.log("hola")
         this.setState({
             showSpinner: !this.state.showSpinner,
@@ -123,8 +123,7 @@ console.log(width)
                     {showCompleted && <Table />}
                 </div>
             </div>
-
-        )
+    );
     }
 }
 

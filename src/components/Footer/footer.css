@@ -1,0 +1,12 @@
+.container-footer {
+  background-color: #535353;
+  color: #ffffff;
+  margin: 0px auto;
+  padding: 15px 0px;
+  font-family: "Roboto", sans-serif;
+  font-size: 1.2em;
+}
+
+.constainer-footer h3 {
+  font-size: 20px;
+}
