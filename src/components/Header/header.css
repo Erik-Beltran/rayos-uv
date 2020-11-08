@@ -2,12 +2,11 @@
   background: url("https://cdn.shopify.com/s/files/1/1525/1400/collections/Rectangle_1_copy_2_9a566d6b-b022-4b96-9487-c17bb90a40b1_1440x.png?v=15900721662");
   background-repeat: no-repeat;
   background-size: 100% cover;
-  background-position: unset;
   height: 40vh;
   width: 80vw;
-  border: 2px solid orangered;
+  margin:auto;
   margin-bottom: 1.5em;
-  margin: auto;
+  
 }
 
 .contenedor-header h2{

@@ -3,6 +3,7 @@
   width: 80vw;
   margin: auto;
   overflow: hidden;
+  margin-bottom: 1.5em;
 }
 
 .contenedor-recomendaciones ul {
