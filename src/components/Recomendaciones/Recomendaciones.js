@@ -20,7 +20,7 @@ export const Recomendaciones = () => {
 
     console.log(uvModerado)
     return (
-        <div className="container recomendaciones">
+        <div className="contenedor-recomendaciones">
             <h2>RECOMENDACIONES</h2>
             <ul>
                 {uvModerado.map(item => (

@@ -1,13 +1,52 @@
-.recomendaciones{
-    border: 2px solid brown;
+.contenedor-recomendaciones {
+  border: 2px solid brown;
+  width: 80vw;
+  margin: auto;
+  overflow: hidden;
 }
 
-.recomendaciones ul{
-    list-style: none;
+.contenedor-recomendaciones ul {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+}
+
+.contenedor-recomendaciones li{
     display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.recomendaciones img{
-    width: 70px;
-    height: 70px;
+.contenedor-recomendaciones img {
+  width: 70px;
+  height: 70px;
+}
+
+@media (max-width: 767px) {
+  .contenedor-recomendaciones {
+    width: 100vw;
+    padding: 0.8em;
+  }
+  .contenedor-recomendaciones h2{
+      font-size: 24px;
+      margin-bottom: 1.5em;
+  }
+  .contenedor-recomendaciones ul{
+      flex-direction: column;
+      flex-wrap: wrap;
+  }
+  .contenedor-recomendaciones li{
+      flex-direction: row;
+      margin-bottom: 1.5em;
+      align-items: center;
+    }
+    .contenedor-recomendaciones li p{
+        text-align: left;
+    }
+  .contenedor-recomendaciones img {
+    width: 30px;
+    height: 30px;
+    margin-right:1.5em ;
+
+  }
 }
