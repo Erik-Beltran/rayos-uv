@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import io from 'socket.io-client';
+import axios from 'axios'
 import './graficas.css'
 import {
     XYPlot,
@@ -10,9 +11,26 @@ import {
     HorizontalGridLines,
 } from "react-vis";
 
+
+const meses = [
+    "Enero",
+    "Febrero",
+    "Marzo",
+    "Abril",
+    "Mayo",
+    "Junio",
+    "Julio",
+    "Agosto",
+    "Septiembre",
+    "Octubre",
+    "Noviembre",
+    "Diciembre"
+]
+
 class Graficas extends Component {
 
     componentDidMount() {
+        
         this.socket = io(); // 1. Handshake with the server
         console.log("indice", this.state.indice)
         this.socket.on('indice', (data) => {
@@ -21,38 +39,98 @@ class Graficas extends Component {
                 indice: data
             })
         })
+        this.getRegistros()
     }
+
 
 
     state = {
         showSpinner: false,
+        showIndice: false,
         indice: "",
         showCompleted: false,
         showGrafica: false,
-        width: ""
+        width: "",
+        registros: []
     }
 
     handleSubmit = (e) => {
+        
+        this.setState({
+            showSpinner:true,
+            showIndice:false
+        })
+        setTimeout(
+        () => {
+            this.setState({
+                showSpinner:false,
+                showIndice:!this.state.showIndice
+            })
+        }, 3000);
+        const fecha = new Date();
         const width = document.body.clientWidth < 767 ? document.body.clientWidth - 20 : 600
         console.log(width)
         console.log("hola")
         this.setState({
-            showSpinner: !this.state.showSpinner,
+            //showSpinner: !this.state.showSpinner,
             showGrafica: true,
             width
-
         })
 
         this.socket.on('connect', () => {
             console.log("conect ")
         });
 
+        this.socket.emit('calcular', true)
 
+
+        let id = Date.now().toString()
+        let city = "medellin"
+        //let year = fecha.getFullYear().toString();
+        let month = meses[fecha.getMonth()];
+        let day = fecha.getDate().toString();
+        let hour = fecha.getHours();
+        let minutes = fecha.getMinutes()
+        let fechaString = `${hour}:${minutes}`
+        console.log({ id, city, month, day, hour, minutes, fechaString })
+        this.sendRegistro(id, city, fecha.getFullYear(), month, day, fechaString, "4")
+        this.getRegistros()
     }
     handleChecked = (e) => {
         this.setState({
             showCompleted: !this.state.showCompleted
         })
+    }
+
+    getRegistros = async () => {
+        try {
+            const registros = await axios.get('/registros')
+            console.log("los", registros.data)
+            this.setState({
+                registros: registros.data
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    sendRegistro = async (id, city, year, month, day, hour, indice)  => {
+        
+        try {
+            const sendRegistro = await axios.post('/registros', {
+                id,
+                city,
+                year,
+                month,
+                day,
+                hour,
+                indice
+            })
+            console.log(sendRegistro)
+        } catch (error) {
+            console.log(error)
+        }   
+    
     }
 
     render() {
@@ -69,7 +147,7 @@ class Graficas extends Component {
             { x: 9, y: 0 }
         ];
 
-        const { showSpinner, showCompleted, showGrafica, width } = this.state
+        const { showSpinner, showIndice, showCompleted, showGrafica, width, registros } = this.state
         console.log(this.state.showSpinner)
 
 
@@ -83,7 +161,7 @@ class Graficas extends Component {
                     {showSpinner &&
                         <div class="lds-dual-ring"></div>
                     }
-                    {!showSpinner &&
+                    {showIndice &&
                         <input className="indice" value={this.state.indice}></input>
                     }
                 </div>
@@ -120,14 +198,14 @@ class Graficas extends Component {
                         </label>
 
                     </div>
-                    {showCompleted && <Table />}
+                    {showCompleted && <Table array={registros} />}
                 </div>
             </div>
-    );
+        );
     }
 }
 
-const Table = () => {
+const Table = ({ array }) => {
     return (
         <table class="table table-hover table-bordered ">
             <thead class="thead-dark">
@@ -141,30 +219,19 @@ const Table = () => {
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                </tr>
+                {
+                    array.map(registro => (
+                        <tr>
+                            <td>{registro.ciudad}</td>
+                            <td>{registro.año}</td>
+                            <td>{registro.mes}</td>
+                            <td>{registro.dia}</td>
+                            <td>{registro.hora}</td>
+                            <td>{registro.indice}</td>
+                        </tr>
+                    ))
+                }
+
             </tbody>
         </table>
     )
