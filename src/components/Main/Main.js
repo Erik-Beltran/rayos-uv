@@ -53,6 +53,13 @@ class Main extends Component {
     }
 
     handleSubmit = (e) => {
+        this.socket.on('indice', (data) => {
+            console.log(data)
+            this.setState({
+                indice: data
+            })
+        })
+
         this.setState({
             showSpinner: true,
             showIndice: false
@@ -64,7 +71,8 @@ class Main extends Component {
                     showIndice: !this.state.showIndice
                 })
             }, 3000);
-        //const fecha = new Date();
+
+        const fecha = new Date();
         const width = document.body.clientWidth < 767 ? document.body.clientWidth - 20 : 600
         console.log(width)
         console.log("hola")
@@ -80,16 +88,16 @@ class Main extends Component {
 
         this.socket.emit('calcular', true)
 
-        // let id = Date.now().toString()
-        // let city = "medellin"
-        // //let year = fecha.getFullYear().toString();
-        // let month = meses[fecha.getMonth()];
-        // let day = fecha.getDate().toString();
-        // let hour = fecha.getHours();
-        // let minutes = fecha.getMinutes()
-        // let fechaString = `${hour}:${minutes}`
-        // console.log({ id, city, month, day, hour, minutes, fechaString })
-        // this.sendRegistro(id, city, fecha.getFullYear(), month, day, fechaString, "4")
+        const body = {
+            id: Date.now(),
+            ciudad: "Medellín",
+            año: fecha.getFullYear(),
+            mes: meses[fecha.getMonth()],
+            dia: fecha.getDate(),
+            hora: `${fecha.getHours()}:${fecha.getMinutes()}`,
+            indice: this.state.indice,
+        }
+        this.sendRegistro(body)
         this.getRegistros()
     }
 
@@ -105,16 +113,11 @@ class Main extends Component {
         }
     }
 
-    sendRegistro = async (id, city, year, month, day, hour, indice) => {
+    sendRegistro = async (body) => {
+
         try {
             const sendRegistro = await axios.post('/registros', {
-                id,
-                city,
-                year,
-                month,
-                day,
-                hour,
-                indice
+                body
             })
             console.log(sendRegistro)
         } catch (error) {

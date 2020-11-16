@@ -1,6 +1,5 @@
-import React, { Component } from 'react'
-import io from 'socket.io-client';
-import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+
 import './graficas.css'
 import {
     XYPlot,
@@ -11,83 +10,83 @@ import {
     HorizontalGridLines,
 } from "react-vis";
 
+const meses = [
+    "Enero",
+    "Febrero",
+    "Marzo",
+    "Abril",
+    "Mayo",
+    "Junio",
+    "Julio",
+    "Agosto",
+    "Septiembre",
+    "Octubre",
+    "Noviembre",
+    "Diciembre"
+]
+const Graficas = ({ registros, width }) => {
 
-const colors = {
-    bajo: "#42be5c",
-    moderado: "#e9b842",
-    alto: "#f1854b",
-    muyAlto: "#f2375a",
-    extremo: "#4f4368"
-}
-
-class Graficas extends Component {
-
-    state = {
-        showCompleted: false,
+    const [data, setData] = useState([])
+    const [showCompleted, setShowCompleted] = useState(false)
+    const fecha = new Date()
+    const dia = fecha.getDate().toString()
+    const mes = meses[fecha.getMonth()]
+    const año= fecha.getFullYear()
+    console.log("reg", registros)
+    const handleChecked = (e) => {
+        setShowCompleted(!showCompleted)
     }
 
-    handleChecked = (e) => {
-        this.setState({
-            showCompleted: !this.state.showCompleted
-        })
-    }
+    useEffect(() => {
+        console.log("object")
+        console.log("reg effect", registros)
+        console.log("dia", dia)
+        const datosHoy = registros.filter(registro => registro.dia === dia && registro.año === año && registro.mes === mes)
+        console.log("hoy",datosHoy)
+        datosHoy.forEach(element => {
+            setData([...data, { x: element.hora, y: element.indice }])
+        });
+    }, [data, dia, registros])
 
-    render() {
-        const data = [
-            { x: 0, y: 8 },
-            { x: 1, y: 5 },
-            { x: 2, y: 4 },
-            { x: 3, y: 9 },
-            { x: 4, y: 1 },
-            { x: 5, y: 7 },
-            { x: 6, y: 6 },
-            { x: 7, y: 3 },
-            { x: 8, y: 2 },
-            { x: 9, y: 0 }
-        ];
+    return (
+        <>
+            <div className="grafica">
+                <h3>{`Valores de hoy ${dia} de ${mes}`}</h3>
+                <div className="showGrafica">
+                    <XYPlot width={width} height={300} xType="ordinal" >
+                        <VerticalGridLines />
+                        <HorizontalGridLines />
+                        <XAxis title="Hora" style={{ text: { fontSize: "red" } }} position="middle" className="x" />
+                        <YAxis title=" Indice de Radiacion" position="middle" />
+                        <LineMarkSeries
+                            className="linemark-series-example-2"
+                            curve={"curveMonotoneX"}
+                            style={{ transform: "rotate(-90)" }}
+                            data={data}
+                        />
+                    </XYPlot>
+                </div>
 
-        const { showCompleted } = this.state
-        const {showGrafica, width, registros} = this.props
-
-        return (
-            <>
-                    <div className="grafica">
-                        {showGrafica && (
-                            <div className="showGrafica">
-                                <XYPlot width={width} height={300} >
-                                    <VerticalGridLines />
-                                    <HorizontalGridLines />
-                                    <XAxis title="Hora" style={{ text: { fontSize: "red" } }} position="middle" className="x" />
-                                    <YAxis title=" Indice de Radiacion" position="middle" />
-                                    <LineMarkSeries
-                                        className="linemark-series-example-2"
-                                        curve={"curveMonotoneX"}
-                                        style={{ transform: "rotate(-90)" }}
-                                        data={data}
-                                    />
-                                </XYPlot>
-                            </div>
-                        )}
-                        <div class="form-check">
-                            <input class="form-check-input"
-                                type="checkbox"
-                                value=""
-                                id="defaultCheck1"
-                                onChange={this.handleChecked}
-                                checked={this.state.showCompleted}
-                            />
-                            <label
-                                class="form-check-label"
-                                for="defaultCheck1">
-                                Mostrar todos los registros
+                <div class="form-check">
+                    <input class="form-check-input"
+                        type="checkbox"
+                        value=""
+                        id="defaultCheck1"
+                        onChange={handleChecked}
+                        checked={showCompleted}
+                    />
+                    <label
+                        class="form-check-label"
+                        for="defaultCheck1">
+                        Mostrar todos los registros
                         </label>
 
-                        </div>
-                        {showCompleted && <Table array={registros} />}
-                    </div>
-            </>
-        );
-    }
+                </div>
+                {showCompleted && <Table array={registros} />}
+            </div>
+        </>
+    );
+
 }
 
 const Table = ({ array }) => {
