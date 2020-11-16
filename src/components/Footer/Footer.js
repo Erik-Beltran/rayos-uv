@@ -1,12 +1,11 @@
 import React from "react";
 import "./footer.css";
-import logo from '../Recomendaciones/img/sita-footer.png'
+import logo from "../Recomendaciones/img/sita-footer.png";
 
 const Footer = () => {
   return (
     <div className="contenedor-footer">
       <h3>Politécnico Colombiano Jaime Isaza Cadavid © 2020</h3>
-
       <p>
         <b>Sede Medellín</b>
         <br />
