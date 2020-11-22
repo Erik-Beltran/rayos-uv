@@ -204,7 +204,7 @@ class Main extends Component {
         </div>
         {
           // showGrafica &&
-          <Recomendaciones indice={8} />
+          <Recomendaciones indice={2} />
         }
         <Definicion />
       </div>

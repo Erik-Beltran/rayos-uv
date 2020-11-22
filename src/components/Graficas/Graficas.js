@@ -67,6 +67,7 @@ const Graficas = ({ registros, width }) => {
   const mes = meses[fecha.getMonth()];
   const año = fecha.getFullYear();
   console.log("reg", registros);
+
   const handleChecked = (e) => {
     setShowCompleted(!showCompleted);
   };
@@ -102,12 +103,13 @@ const Graficas = ({ registros, width }) => {
       });
     }
   }, [registros, prevRegistros, dia, año, mes, data]);
+
   const registroPrueba = [
     {
       id: "1",
       ciudad: "Medallo",
       año: "2020",
-      mes: "11",
+      mes: "10",
       dia: "21",
       hora: "9:56",
       indice: 5,
@@ -116,7 +118,7 @@ const Graficas = ({ registros, width }) => {
       id: "2",
       ciudad: "Medallo",
       año: "2020",
-      mes: "11",
+      mes: "9",
       dia: "21",
       hora: "9:56",
       indice: 5,
@@ -125,7 +127,7 @@ const Graficas = ({ registros, width }) => {
       id: "3",
       ciudad: "Medallo",
       año: "2020",
-      mes: "11",
+      mes: "8",
       dia: "21",
       hora: "9:56",
       indice: 5,
@@ -143,7 +145,7 @@ const Graficas = ({ registros, width }) => {
       id: "5",
       ciudad: "Medallo",
       año: "2020",
-      mes: "11",
+      mes: "9",
       dia: "21",
       hora: "9:56",
       indice: 5,
@@ -161,7 +163,7 @@ const Graficas = ({ registros, width }) => {
       id: "7",
       ciudad: "Medallo",
       año: "2020",
-      mes: "11",
+      mes: "8",
       dia: "21",
       hora: "9:56",
       indice: 5,

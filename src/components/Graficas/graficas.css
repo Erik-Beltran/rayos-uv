@@ -60,8 +60,25 @@
 }
 
 .table {
-  box-shadow: 0 0 10px blue;
-  height: initial;
+  box-shadow: 0 0 10px black;
+  border-collapse: collapse;
+  height: auto;
+}
+
+.react-bs-table {
+  height: auto !important;
+}
+.react-bs-table-pagination {
+  text-align: center;
+  transform: translateX(-38%);
+}
+
+.react-bootstrap-table-page-btns-ul {
+  float: none;
+}
+
+.react-bs-table-tool-bar {
+  text-align: initial;
 }
 
 @keyframes lds-dual-ring {
