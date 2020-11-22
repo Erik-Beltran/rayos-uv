@@ -28,6 +28,14 @@ const colors = {
   extremo: "#4f4368",
 };
 
+const mensajes={
+  bajo: "Es un indice Uv Bajo. Puede permanecer en el exterior sin riesgo",
+  moderado:"Es un indice Uv Moderado. Necesita protección",
+  alto: "Es un indice Uv Alto. Necesita proteccion máxima",
+  muyAlto: "Es un indice Uv Muy Alto. Necesita proteccion máxima",
+  extremo: "Es un indice Uv Extremo. Evite exponerse al sol"
+}
+
 class Main extends Component {
   componentDidMount() {
     this.socket = io(); // 1. Handshake with the server
@@ -131,7 +139,7 @@ class Main extends Component {
   color = () => {
     const { indice } = this.state;
     if (indice >= 0 && indice <= 2) {
-      return colors.bajo;
+      return colors.bajo
     }
     if (indice >= 3 && indice <= 5) {
       return colors.moderado;
@@ -146,6 +154,25 @@ class Main extends Component {
       return colors.extremo;
     }
   };
+  mensaje = () => {
+   
+    const indice  = 2;
+    if (indice >= 0 && indice <= 2) {
+     return mensajes.bajo
+    }
+    if (indice >= 3 && indice <= 5) {
+      return mensajes.moderado
+    }
+    if (indice >= 6 && indice <= 7) {
+      return mensajes.alto
+    }
+    if (indice >= 8 && indice <= 10) {
+      return mensajes.muyAlto
+    }
+    if (indice >= 11) {
+      return mensajes.extremo
+    }
+  };
 
   render() {
     const {
@@ -157,7 +184,10 @@ class Main extends Component {
       indice,
     } = this.state;
     console.log(this.state.showSpinner);
-    const colorIndex = this.color();
+    // const colorIndex = this.color();
+  
+    const info = this.mensaje();
+    console.log("info",info)
     return (
       <div>
         <div className="contenedor-graficas">
@@ -189,10 +219,16 @@ class Main extends Component {
             {showIndice && (
               <div>
                 <input
-                  style={{ color: colorIndex }}
+                  style={{ color: colors.bajo }}
                   className="indice"
-                  value={this.state.indice}
+                  // value={this.state.indice}
+                  value={2}
                 ></input>
+                <p
+                  style={{ color: colors.bajo }}
+                  className="info">
+                  {info}
+                </p>
               </div>
             )}
           </div>
@@ -204,7 +240,7 @@ class Main extends Component {
         </div>
         {
           // showGrafica &&
-          <Recomendaciones indice={8} />
+          <Recomendaciones indice={2} />
         }
         <Definicion />
       </div>
