@@ -1,8 +1,8 @@
 import React from "react";
-import gafas from "./img/sun-glasses.png";
-import mangaLarga from "./img/manga-larga.png";
-import sunScreen from "./img/protectorsolar.png";
-import sombrero from "./img/gorra.svg";
+import gafas from "./img/sun-glasses1.png";
+import mangaLarga from "./img/manga-larga1.png";
+import sunScreen from "./img/protectorsolar1.png";
+import sombrero from "./img/gorra.png";
 import sombrilla from "./img/sombrilla.png";
 import "./recomendaciones.css";
 

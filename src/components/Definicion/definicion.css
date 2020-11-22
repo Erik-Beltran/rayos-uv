@@ -1,0 +1,122 @@
+.container-definicion {
+  width: 80vw;
+  margin: auto;
+}
+.container-definicion h2{
+    margin-bottom: 5%;
+    color: orangered;
+}
+
+.queEs {
+  display: flex;
+  padding: 5%;
+}
+
+.queEs .queEs-text {
+  width: 50%;
+  height: auto;
+}
+.queEs-text p {
+  font-weight: 400;
+  font-size: 1.5em;
+  text-align: justify;
+}
+.queEs img {
+  width: 45%;
+  margin: auto;
+}
+
+.beneficios {
+  display: flex;
+  padding: 5%;
+  /* border: 2px solid orange; */
+}
+.beneficios-text {
+  width: 50%;
+  /* border: 2px solid red; */
+}
+
+.beneficios-text p {
+  font-weight: 400;
+  font-size: 1.5em;
+  text-align: justify;
+}
+
+.beneficios img {
+  width: 45%;
+  margin: auto;
+}
+
+.riesgos {
+  font-weight: 400;
+  font-size: 1.5em;
+  padding: 3%;
+}
+.riesgos li{
+    margin-bottom: 1.4em;
+    text-align: justify;
+}
+.riesgos img{
+    margin-bottom: 3%;
+}
+.riesgos p{
+    text-align: left;
+}
+
+.persons{
+    margin-left: 6%;
+}
+
+@media(max-width: 767px){
+    .container-definicion{
+        width: 100vw;
+    }
+    .container-definicion h2{
+        font-size: 18px;
+    }
+    .queEs{
+        flex-direction: column;
+    }
+    .queEs .queEs-text {
+        width: 98%;
+        margin: auto;
+      }
+      .queEs .queEs-text p {
+        font-size: 18px;
+      }
+      .queEs img {
+        width: 90%;
+        margin: auto;
+      }
+      .beneficios{
+        flex-direction: column-reverse;
+    }
+    .beneficios .beneficios-text {
+        width: 98%;
+        margin: auto;
+      }
+      .beneficios .beneficios-text p {
+        font-size: 18px;
+      }
+      .beneficios img {
+        width: 90%;
+        margin: auto;
+      }
+
+      .riesgos {
+        font-size: 18px;
+      }
+      .riesgos li{
+          font-size: 18px;
+      }
+      .riesgos img{
+          width: 100%;
+      }
+      .riesgos p{
+          font-size: 18px;
+      }
+      
+      .persons{
+          margin-left: 6%;
+      }
+}

@@ -1,17 +1,25 @@
 .contenedor-header {
-  background: url("https://cdn.shopify.com/s/files/1/1525/1400/collections/Rectangle_1_copy_2_9a566d6b-b022-4b96-9487-c17bb90a40b1_1440x.png?v=15900721662");
+  /* background: url("https://cdn.shopify.com/s/files/1/1525/1400/collections/Rectangle_1_copy_2_9a566d6b-b022-4b96-9487-c17bb90a40b1_1440x.png?v=15900721662"); */
+  background: url("./header3.jpg"); 
   background-repeat: no-repeat;
-  background-size: 100% cover;
-  height: 40vh;
-  width: 80vw;
-  margin:auto;
+  background-size: 100% auto;  
+  height: 75vh;
+  width: 98.7vw;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+  margin: auto;
   margin-bottom: 1.5em;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start ;
   
 }
 
 .contenedor-header h2{
-    font-size:40px ;
-    text-align: right;
+    font-size:55px ;
+    margin: 1%;
+    color: orangered;
 }
 
 @media (max-width: 767px) {
@@ -19,10 +27,13 @@
   .contenedor-header{
     width: 100vw;
     background-size: cover;
+    justify-content: flex-end;
+    height: 40vh;
   }
 
   .contenedor-header h2{
-   display: none;
+    font-size: 20px;
+    font-weight: 700;
     
 }
 

@@ -40,6 +40,10 @@ class Main extends Component {
         //     })
         // })
         this.getRegistros()
+        const width = document.body.clientWidth < 767 ? document.body.clientWidth - 20 : 600
+        this.setState({
+            width
+        })
     }
 
     state = {
@@ -53,52 +57,55 @@ class Main extends Component {
     }
 
     handleSubmit = (e) => {
-        this.socket.on('indice', (data) => {
-            console.log(data)
-            this.setState({
-                indice: data
-            })
-        })
-
+        const fecha = new Date();
         this.setState({
             showSpinner: true,
-            showIndice: false
+            showIndice: false,
         })
-        setTimeout(
-            () => {
-                this.setState({
-                    showSpinner: false,
-                    showIndice: !this.state.showIndice
-                })
-            }, 3000);
-
-        const fecha = new Date();
-        const width = document.body.clientWidth < 767 ? document.body.clientWidth - 20 : 600
-        console.log(width)
-        console.log("hola")
-        this.setState({
-            //showSpinner: !this.state.showSpinner,
-            showGrafica: true,
-            width
+        var newIndex;
+        this.socket.on('indice', (data) => {
+            console.log("data type", data)
+            newIndex = data;
         })
+        setTimeout(() => {
 
-        this.socket.on('connect', () => {
-            console.log("conect ")
-        });
+            this.setState({
+                indice: Math.round(Number(newIndex)),
+                showSpinner: false,
+                showIndice: !this.state.showIndice,
+                showGrafica: true,
+            })
 
-        this.socket.emit('calcular', true)
 
-        const body = {
-            id: Date.now(),
-            ciudad: "Medellín",
-            año: fecha.getFullYear(),
-            mes: meses[fecha.getMonth()],
-            dia: fecha.getDate(),
-            hora: `${fecha.getHours()}:${fecha.getMinutes()}`,
-            indice: this.state.indice,
-        }
-        this.sendRegistro(body)
-        this.getRegistros()
+            // setTimeout(
+            //     () => {
+            //         this.setState({
+            //             showSpinner: false,
+            //             showIndice: !this.state.showIndice
+            //         })
+            //     }, 3000);
+
+
+            // this.setState({
+            //     showGrafica: true,
+            // })
+
+            this.socket.on('connect', () => {
+                console.log("conect ")
+            });
+            this.socket.emit('calcular', true)
+            const body = {
+                id: Date.now(),
+                ciudad: "Medellín",
+                año: fecha.getFullYear(),
+                mes: meses[fecha.getMonth()],
+                dia: fecha.getDate(),
+                hora: `${fecha.getHours()}:${fecha.getMinutes()}`,
+                indice: this.state.indice
+            }
+            this.sendRegistro(body)
+            this.getRegistros()
+        }, 5000);
     }
 
     getRegistros = async () => {
@@ -114,7 +121,6 @@ class Main extends Component {
     }
 
     sendRegistro = async (body) => {
-
         try {
             const sendRegistro = await axios.post('/registros', {
                 body
@@ -172,17 +178,12 @@ class Main extends Component {
                                 <input style={{ color: colorIndex }} className="indice" value={this.state.indice}></input>
                             </div>
                         }
-                        {/* <p style={{ color: colors.bajo }}>BAJO</p>
-                        <p style={{ color: colors.moderado }}>MODERADO</p>
-                        <p style={{ color: colors.alto }}>ALTO</p>
-                        <p style={{ color: colors.muyAlto }}>MUY ALTO</p>
-                        <p style={{ color: colors.extremo }}>EXTREMO</p> */}
-
                     </div>
                     <Graficas showGrafica={showGrafica} width={width} registros={registros} />
                 </div>
                 {
-                    showGrafica && <Recomendaciones indice={indice} />
+                    // showGrafica &&
+                    <Recomendaciones indice={8} />
                 }
                 <Definicion />
             </div>

@@ -5,7 +5,9 @@
   padding: 15px 0px;
   font-family: "Roboto", sans-serif;
   font-size: 1.2em;
-  width: 80vw;
+  width: 98.7vw;
+  margin:auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
 }
 
 .constainer-footer h3 {
