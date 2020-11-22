@@ -58,9 +58,12 @@
   border-color: #cef transparent #cef transparent;
   animation: lds-dual-ring 1.2s linear infinite;
 }
-table {
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+
+.table {
+  box-shadow: 0 0 10px blue;
+  height: initial;
 }
+
 @keyframes lds-dual-ring {
   0% {
     transform: rotate(0deg);
