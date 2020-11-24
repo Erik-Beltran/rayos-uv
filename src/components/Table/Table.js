@@ -7,7 +7,6 @@ import {
 
 function Table({ array }) {
   // const createCustomButtonGroup = (props) => {
-  //   console.log("p", props);
   //   return (
   //     <ButtonGroup className="my-custom-class" sizeClass="btn-group-md">
   //       {props.exportCSVBtn}

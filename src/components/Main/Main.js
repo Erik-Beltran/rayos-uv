@@ -6,8 +6,7 @@ import Recomendaciones from "../Recomendaciones/Recomendaciones";
 import Spinner from "@bit/nexxtway.react-rainbow.spinner";
 import Definicion from "../Definicion/Definicion";
 
-
-const meses = [
+const months = [
   "Enero",
   "Febrero",
   "Marzo",
@@ -29,18 +28,18 @@ const colors = {
   extremo: "#4f4368",
 };
 
-const mensajes = {
+const messages = {
   bajo: "Es un indice Uv Bajo. Puede permanecer en el exterior sin riesgo",
   moderado: "Es un indice Uv Moderado. Necesita protección",
   alto: "Es un indice Uv Alto. Necesita proteccion máxima",
   muyAlto: "Es un indice Uv Muy Alto. Necesita proteccion máxima",
-  extremo: "Es un indice Uv Extremo. Evite exponerse al sol"
-}
+  extremo: "Es un indice Uv Extremo. Evite exponerse al sol",
+};
 
 class Main extends Component {
   componentDidMount() {
     this.socket = io();
-    this.getRegistros()
+    this.getRegistros();
     const width =
       document.body.clientWidth < 767 ? document.body.clientWidth - 20 : 600;
     this.setState({
@@ -48,54 +47,21 @@ class Main extends Component {
     });
 
     setTimeout(() => {
-      const fecha = new Date()
-      let dia = fecha.getDate().toString()
-      let mes = meses[fecha.getMonth()];
-      let año = fecha.getFullYear()
-      console.log(dia, mes, año)
-      console.log("in if");
-      console.log("registros", this.state.registros)
-      const datosHoy = this.state.registros.filter(
-        (registro) =>
-          registro.dia === dia && registro.año === año && registro.mes === mes
+      const date = new Date();
+      let day = date.getDate().toString();
+      let month = months[date.getMonth()];
+      let año = date.getFullYear();
+      const dayData = this.state.records.filter(
+        (record) =>
+          record.day === day && record.año === año && record.month === month
       );
-      console.log("registros hoy", datosHoy);
-      datosHoy.forEach((element) => {
-
-        this.setState(prevState => ({
-          data: [...prevState.data, { x: element.hora, y: element.indice }]
-        }))
+      dayData.forEach((element) => {
+        this.setState((prevState) => ({
+          data: [...prevState.data, { x: element.hora, y: element.indice }],
+        }));
       });
-
-      console.log("data", this.state.data)
     }, 500);
-
   }
-
-  // componentDidUpdate(prevState) {
-
-  //   if (this.state.registros !== prevState.registros) {
-  //     const fecha = new Date()
-  //     let dia = fecha.getDate().toString()
-  //     let mes = meses[fecha.getMonth()];
-  //     let año = fecha.getFullYear()
-  //     console.log(dia, mes, año)
-  //     console.log("in if");
-  //     console.log("registros", this.state.registros)
-  //     const datosHoy = this.state.registros.filter(
-  //       (registro) =>
-  //         registro.dia === dia && registro.año === año && registro.mes === mes
-  //     );
-  //     console.log("registros hoy", datosHoy);
-  //     datosHoy.forEach((element) => {
-
-  //       this.setState(prevState => ({
-  //         data: [...prevState.data, { x: element.hora, y: element.indice }]
-  //       }))
-
-  //     });
-  //   }
-  // }
 
   state = {
     showSpinner: false,
@@ -104,26 +70,23 @@ class Main extends Component {
     showCompleted: false,
     showGrafica: false,
     width: "",
-    registros: [],
-
-    data: []
+    records: [],
+    data: [],
   };
 
   handleSubmit = (e) => {
     this.socket.on("connect", () => {
       console.log("conect ");
     });
-    const fecha = new Date();
+    const date = new Date();
     this.setState({
       showSpinner: true,
       showIndice: false,
     });
     var newIndex;
     this.socket.on("indice", (data) => {
-      console.log("data type", data);
       newIndex = data;
     });
-    console.log("new indice", newIndex)
     setTimeout(() => {
       this.setState({
         indice: Math.round(Number(newIndex)),
@@ -131,21 +94,26 @@ class Main extends Component {
         showIndice: !this.state.showIndice,
         showGrafica: true,
       });
-      console.log("indice state", this.state.indice)
 
       this.socket.emit("calcular", true);
       const body = {
         id: Date.now(),
         ciudad: "Medellín",
-        año: fecha.getFullYear(),
-        mes: meses[fecha.getMonth()],
-        dia: fecha.getDate(),
-        hora: `${fecha.getHours()}:${fecha.getMinutes()}`,
+        año: date.getFullYear(),
+        mes: months[date.getMonth()],
+        day: date.getDate(),
+        hora: `${date.getHours()}:${date.getMinutes()}`,
         indice: this.state.indice,
       };
-      this.setState(prevState => ({
-        data: [...prevState.data, { x: `${fecha.getHours()}:${fecha.getMinutes()}`, y: this.state.indice }]
-      }))
+      this.setState((prevState) => ({
+        data: [
+          ...prevState.data,
+          {
+            x: `${date.getHours()}:${date.getMinutes()}`,
+            y: this.state.indice,
+          },
+        ],
+      }));
 
       this.sendRegistro(body);
       this.getRegistros();
@@ -154,10 +122,9 @@ class Main extends Component {
 
   getRegistros = async () => {
     try {
-      const registros = await axios.get("/registros");
-      console.log("los", registros.data);
+      const records = await axios.get("/registros");
       this.setState({
-        registros: registros.data,
+        records: records.data,
       });
     } catch (error) {
       console.log(error);
@@ -178,7 +145,7 @@ class Main extends Component {
   color = () => {
     const { indice } = this.state;
     if (indice >= 0 && indice <= 2) {
-      return colors.bajo
+      return colors.bajo;
     }
     if (indice >= 3 && indice <= 5) {
       return colors.moderado;
@@ -193,23 +160,22 @@ class Main extends Component {
       return colors.extremo;
     }
   };
-  mensaje = () => {
-
+  message = () => {
     const { indice } = this.state;
     if (indice >= 0 && indice <= 2) {
-      return mensajes.bajo
+      return messages.bajo;
     }
     if (indice >= 3 && indice <= 5) {
-      return mensajes.moderado
+      return messages.moderado;
     }
     if (indice >= 6 && indice <= 7) {
-      return mensajes.alto
+      return messages.alto;
     }
     if (indice >= 8 && indice <= 10) {
-      return mensajes.muyAlto
+      return messages.muyAlto;
     }
     if (indice >= 11) {
-      return mensajes.extremo
+      return messages.extremo;
     }
   };
 
@@ -219,15 +185,13 @@ class Main extends Component {
       showIndice,
       showGrafica,
       width,
-      registros,
+      records,
       indice,
-      data
+      data,
     } = this.state;
-    console.log(this.state.showSpinner);
     const colorIndex = this.color();
 
-    const info = this.mensaje();
-    console.log("info", info)
+    const info = this.message();
     return (
       <div>
         <div className="contenedor-graficas">
@@ -262,11 +226,8 @@ class Main extends Component {
                   style={{ color: colorIndex }}
                   className="indice"
                   value={this.state.indice}
-
                 ></input>
-                <p
-                  style={{ color: colorIndex }}
-                  className="info">
+                <p style={{ color: colorIndex }} className="info">
                   {info}
                 </p>
               </div>
@@ -275,14 +236,11 @@ class Main extends Component {
           <Graficas
             showGrafica={showGrafica}
             width={width}
-            registros={registros}
+            records={records}
             data={data}
           />
         </div>
-        {
-          showGrafica &&
-          <Recomendaciones indice={indice} />
-        }
+        {showGrafica && <Recomendaciones indice={indice} />}
         <Definicion />
       </div>
     );
