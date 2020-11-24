@@ -55,8 +55,8 @@ export const Recomendaciones = ({ indice }) => {
     <div className="contenedor-recomendaciones">
       <h2>RECOMENDACIONES</h2>
       <ul>
-        {nivelRecomendacion().map((item) => (
-          <li>
+        {nivelRecomendacion().map((item, index) => (
+          <li key={index}>
             <img src={item.img} alt={item.descripcion}></img>
             <p>{item.descripcion}</p>
           </li>

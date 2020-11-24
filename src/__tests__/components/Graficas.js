@@ -3,7 +3,7 @@ import Graficas from "../../components/Graficas/Graficas";
 import { shallow } from "enzyme";
 import cloneDeep from "lodash/cloneDeep";
 
-describe("when the Graficas components has no data nor records", () => {
+describe("when the Graficas components has no data no records", () => {
   const data = [];
   const width = 100;
   const records = [];
